@@ -1,0 +1,15 @@
+{
+  "name": "test-microservices",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npm --prefix auth run lint && npm --prefix gateway run lint && npm --prefix todo run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MorzhaloPavel/test-microservices.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
