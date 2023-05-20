@@ -1,10 +1,29 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './todo.controller';
-import { AppService } from './todo.service';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+
+import { ConfigService } from './config';
+import { TodoSchema } from './schemas/todo.schema';
+import { TodoController } from './todo.controller';
+import { TodoService } from './todo.service';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({ envFilePath: '../.env' }),
+    MongooseModule.forRootAsync({
+      useFactory: async () => ({
+        uri: new ConfigService().get('mongoDNS'),
+      }),
+    }),
+    MongooseModule.forFeature([
+      {
+        name: 'Todo',
+        schema: TodoSchema,
+        collection: 'todo',
+      },
+    ]),
+  ],
+  controllers: [TodoController],
+  providers: [TodoService],
 })
-export class AppModule {}
+export class TodoModule {}
